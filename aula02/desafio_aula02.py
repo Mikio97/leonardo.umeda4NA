@@ -4,7 +4,7 @@ def media(lista):
 
 
 def regressao_linear(x, y):
-    # Calculando as médias de x e y
+   
     x_media = media(x)
     y_media = media(y)
 
