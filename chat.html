@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Simples</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Chatbot Simples</h1>
+        <div id="chatbox">Digite sua pergunta ou clique em uma opção:</div>
+    
+        <input type="text" id="inputPergunta" placeholder="Digite sua pergunta">
+        <button class="btn" onclick="enviarPergunta()">Enviar</button>
+
+        <button class="btn" onclick="enviarPerguntaBotao('oi')">Oi</button>
+        <button class="btn" onclick="enviarPerguntaBotao('qual seu nome')">Qual seu nome?</button>
+        <button class="btn" onclick="enviarPerguntaBotao('atendimento humano')">Atendimento humano</button>
+    </div>
+    <script>
+        async function enviarPergunta() {
+            const pergunta = document.getElementById("inputPergunta").value;
+            if (pergunta.trim() === "") return; // Evita enviar perguntas vazias
+
+            const resposta = await fetch("http://127.0.0.1:5000/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ pergunta })
+            }).then(res => res.json());
+            
+            document.getElementById("chatbox").innerHTML = resposta.resposta;
+        }
+
+        function enviarPerguntaBotao(pergunta) {
+            document.getElementById("inputPergunta").value = pergunta;
+            enviarPergunta();
+        }
+    </script>
+</body>
+</html>
